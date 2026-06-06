@@ -37,15 +37,44 @@ Possible actions:
 5. SUMMARY:
 {{"action": "summary"}}
 
-6. UNKNOWN (can't parse):
-{{"action": "unknown", "reply": "friendly message asking for clarification"}}
+6. ASK FOR CLARIFICATION (when unsure about anything):
+{{"action": "unknown", "reply": "your question to the user"}}
 
 Rules:
 - For "complete" and "delete", fuzzy-match the user's text against existing task titles.
 - For "list", filter tasks by priority/category/due date if the user specifies.
 - Infer due dates from natural language: "tomorrow", "Friday", "next week", "end of month".
-- Default priority is "medium" unless specified.
-- Category can be inferred from context (e.g., "buy groceries" → "Shopping", "call dentist" → "Health").
+
+PRIORITY — always infer from context, never leave blank:
+  high   — urgent, deadline today/tomorrow, critical, ASAP, boss asked, blocking others
+  medium — this week, important but not urgent, regular work tasks
+  low    — someday, no deadline, nice to have, optional
+  If you genuinely cannot infer priority from context, use action "unknown" and ask.
+
+DUE DATE — always try to infer from context:
+  - "buy groceries" → probably today or tomorrow
+  - "file taxes" → infer from context or ask
+  - "call mom" → no due date is fine (null)
+  - If the task implies urgency or a real deadline but no date is given, ask.
+
+CATEGORY — always assign one, never null:
+  Work       — meetings, reports, emails, deadlines, clients, projects, presentations
+  Health     — doctor, dentist, gym, medication, exercise, therapy
+  Shopping   — buy, groceries, order, purchase, store
+  Finance    — bills, taxes, bank, invoice, budget, payment
+  Personal   — family, friends, hobbies, self-care, birthdays
+  Home       — cleaning, repairs, landlord, furniture, maintenance
+  Learning   — courses, books, study, practice, research
+  Travel     — flights, hotels, packing, visa, trips
+  Errands    — post office, DMV, appointments, paperwork
+  If you are not sure which category fits, use action "unknown" and ask.
+
+WHEN TO ASK (use action "unknown" with a clear, specific question):
+  - Category is genuinely ambiguous
+  - Priority cannot be inferred at all
+  - The task description is too vague to save meaningfully
+  - You are not sure if user wants to add, complete, or something else
+  Ask ONE question at a time, short and friendly.
 """
 
 

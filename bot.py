@@ -283,6 +283,7 @@ async def send_daily_digest(context: ContextTypes.DEFAULT_TYPE):
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
+    logger.info(os.environ.keys())
     token = os.getenv("TELEGRAM_BOT_TOKEN")
     anthropic_key = os.getenv("ANTHROPIC_API_KEY")
 

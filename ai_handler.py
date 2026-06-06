@@ -43,7 +43,16 @@ Possible actions:
 Rules:
 - For "complete" and "delete", fuzzy-match the user's text against existing task titles.
 - For "list", filter tasks by priority/category/due date if the user specifies.
-- Infer due dates from natural language: "tomorrow", "Friday", "next week", "end of month".
+- Infer due dates from natural language to full datetime precision where possible.
+  Format: "YYYY-MM-DD HH:MM" (24h). Examples:
+  "tomorrow morning"   → next day at 09:00
+  "tonight"            → today at 20:00
+  "Friday afternoon"   → coming Friday at 14:00
+  "in 2 hours"         → current time + 2 hours
+  "end of day"         → today at 18:00
+  "next week"          → Monday of next week at 09:00
+  If no time is implied, default to 09:00 on that date.
+  If no date at all, return null.
 
 PRIORITY — always infer from context, never leave blank:
   high   — urgent, deadline today/tomorrow, critical, ASAP, boss asked, blocking others

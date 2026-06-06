@@ -283,10 +283,16 @@ async def send_daily_digest(context: ContextTypes.DEFAULT_TYPE):
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    import os
     token = os.getenv("TELEGRAM_BOT_TOKEN")
+    anthropic_key = os.getenv("ANTHROPIC_API_KEY")
+
+    logger.info(f"TOKEN set: {bool(token)}, length: {len(token) if token else 0}")
+    logger.info(f"ANTHROPIC KEY set: {bool(anthropic_key)}, length: {len(anthropic_key) if anthropic_key else 0}")
+
     if not token:
-        raise ValueError("Set TELEGRAM_BOT_TOKEN environment variable")
+        raise ValueError("TELEGRAM_BOT_TOKEN is missing")
+    if not anthropic_key:
+        raise ValueError("ANTHROPIC_API_KEY is missing")
 
     app = Application.builder().token(token).build()
 

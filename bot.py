@@ -13,7 +13,6 @@ from telegram.ext import (
 )
 from ai_handler import AIHandler
 from database import Database
-from scheduler import setup_scheduler
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",

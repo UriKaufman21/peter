@@ -6,8 +6,8 @@ Powered by Claude AI + python-telegram-bot + SQLite
 import logging
 import asyncio
 import os
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 from datetime import datetime, time
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
@@ -283,8 +283,8 @@ async def send_daily_digest(context: ContextTypes.DEFAULT_TYPE):
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    token = os.getenv("TELEGRAM_BOT_TOKEN")
-    anthropic_key = os.getenv("ANTHROPIC_API_KEY")
+    token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    anthropic_key = os.environ.get("ANTHROPIC_API_KEY")
 
     logger.info(f"TOKEN set: {bool(token)}, length: {len(token) if token else 0}")
     logger.info(f"ANTHROPIC KEY set: {bool(anthropic_key)}, length: {len(anthropic_key) if anthropic_key else 0}")

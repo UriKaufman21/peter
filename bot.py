@@ -5,6 +5,9 @@ Powered by Claude AI + python-telegram-bot + SQLite
 
 import logging
 import asyncio
+import os
+from dotenv import load_dotenv
+load_dotenv()
 from datetime import datetime, time
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
